@@ -1,0 +1,33 @@
+{
+  "name": "itt",
+  "version": "1.0.0",
+  "description": "Issue Tracking Tool",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gajurel/itt.git"
+  },
+  "keywords": [
+    "Issue",
+    "Tracking",
+    "Tool"
+  ],
+  "author": "Abhinav Gajurel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gajurel/itt/issues"
+  },
+  "homepage": "https://github.com/gajurel/itt#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "express": "^4.15.3",
+    "jsonwebtoken": "^7.4.1",
+    "mongoose": "^4.11.5"
+  },
+  "devDependencies": {}
+}
