@@ -86,6 +86,7 @@ let validPassword = (password) => {
     const regExp = new RegExp(/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,35}$/);
     return regExp.test(password);
 };
+};
 
 const passwordValidators = [
   {

@@ -1,0 +1,36 @@
+<div id="login-div" class ="container">
+<h2 class="page-header">Login</h2>
+
+<div class="row show-hide-message">
+  <div [ngClass]="messageClass">
+    {{ message }}
+  </div>
+</div>
+
+<form [formGroup]="form" (submit)="onLoginSubmit()">
+
+  <div class="form-group">
+    <label for="loginid">Login ID</label>
+    <div [ngClass]="{'has-error': form.controls.loginid.errors && form.controls.loginid.dirty, 'has-success': form.controls.loginid.valid && form.controls.loginid.dirty }">
+      <input class="form-control" type="text" name="loginid" formControlName="loginid" />
+      <ul class="help-block">
+        <li *ngIf="form.controls.loginid.errors?.required && form.controls.loginid.dirty">This field is required.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <div [ngClass]="{'has-error': form.controls.password.errors && form.controls.password.dirty, 'has-success': form.controls.password.valid && form.controls.password.dirty }">
+      <input class="form-control" type="password" name="password" formControlName="password" />
+      <ul class="help-block">
+        <li *ngIf="form.controls.password.errors?.required && form.controls.password.dirty">This field is required.</li>
+      </ul>
+    </div>
+  </div>
+  <input [disabled]="!form.valid || processing" class="btn btn-primary" type="submit" value="Login" />
+</form>
+
+<br>
+  <br>
+</div>

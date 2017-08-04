@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 
 app.use('/authentication', authentication);
 
-app.listen(8080, (err) => {
+app.listen(8080, function(err) {
   if (err){
     console.log('Error listening on port 8080');
   }
