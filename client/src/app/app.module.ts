@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { AppRouterModule } from './router/app.router.module';
 import { AppComponent } from './app.component';
@@ -12,6 +13,7 @@ import { RegisterComponent } from './components/register/register.component';
 
 import { AuthService } from './services/auth.service';
 import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -19,14 +21,16 @@ import { LoginComponent } from './components/login/login.component';
     HomeComponent,
     NavbarComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRouterModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    FlashMessagesModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

@@ -91,6 +91,41 @@ module.exports = (router) => {
     }
   });
 
+    router.post('/login', (req, res) => {
+    if (!req.body.loginid) {
+      res.json({ success: false, message: 'No login id provided' });
+    } else {
+      if (!req.body.password) {
+        res.json({ success: false, message: 'No password provided.' });
+      } else {
+        User.findOne({ loginid: req.body.loginid }, (err, user) => {
+          if (err) {
+            res.json({ success: false, message: err });
+          } else {
+            if (!user) {
+              res.json({ success: false, message: 'Invalid Login ID.' });
+            } else {
+              const validPassword = user.comparePassword(req.body.password);
+              if (!validPassword) {
+                res.json({ success: false, message: 'Invalid Password' });
+              } else {
+                const token = jwt.sign({ loginId: user._id }, config.secret, { expiresIn: '5m' });
+                res.json({
+                  success: true,
+                  message: 'Success!',
+                  token: token,
+                  user: {
+                    loginid: user.loginid
+                  }
+                });
+              }
+            }
+          }
+        });
+      }
+    }
+  });
+
   
   return router; 
 }
