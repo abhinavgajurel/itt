@@ -12,8 +12,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
 
 import { AuthService } from './services/auth.service';
+import { PostService } from './services/post.service';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TimelineComponent } from './components/dashboard/timeline/timeline.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     NavbarComponent,
     RegisterComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    TimelineComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     HttpModule,
     FlashMessagesModule
   ],
-  providers: [AuthService],
+  providers: [AuthService,PostService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

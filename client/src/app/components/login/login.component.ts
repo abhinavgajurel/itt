@@ -26,18 +26,18 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.form = this.formBuilder.group({
-      loginid: ['', Validators.required],
+      loginId: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
   disableForm() {
-    this.form.controls['loginid'].disable(); 
+    this.form.controls['loginId'].disable(); 
     this.form.controls['password'].disable(); 
   }
 
   enableForm() {
-    this.form.controls['loginid'].enable(); 
+    this.form.controls['loginId'].enable(); 
     this.form.controls['password'].enable();
   }
 
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     this.processing = true; 
     this.disableForm(); 
     const user = {
-      loginid: this.form.get('loginid').value,
+      loginId: this.form.get('loginId').value,
       password: this.form.get('password').value
     }
 

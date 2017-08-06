@@ -33,8 +33,8 @@ export class AuthService {
     return this.http.post(this.domain + 'authentication/register', user).map(res => res.json());
   }
 
-  checkLogin(loginid) {
-    return this.http.get(this.domain + 'authentication/checkLoginId/' + loginid).map(res => res.json());
+  checkLogin(loginId) {
+    return this.http.get(this.domain + 'authentication/checkLoginId/' + loginId).map(res => res.json());
   }
 
   checkEmail(email) {

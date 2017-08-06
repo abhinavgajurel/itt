@@ -7,6 +7,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const authentication = require('./routes/authentication')(router);
+const dashboard = require('./routes/dashboard')(router);
 
 // Database Connection
 mongoose.Promise = global.Promise;
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/authentication', authentication);
+app.use('/posts', dashboard);
 
 app.listen(8080, function(err) {
   if (err){

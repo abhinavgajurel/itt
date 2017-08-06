@@ -9,11 +9,11 @@
   <form [formGroup]="form" (submit)="onLoginSubmit()">
 
     <div class="form-group">
-      <label for="loginid">Login ID</label>
-      <div [ngClass]="{'has-error': form.controls.loginid.errors && form.controls.loginid.dirty, 'has-success': form.controls.loginid.valid && form.controls.loginid.dirty }">
-        <input class="form-control" type="text" name="loginid" formControlName="loginid" />
+      <label for="loginId">Login ID</label>
+      <div [ngClass]="{'has-error': form.controls.loginId.errors && form.controls.loginId.dirty, 'has-success': form.controls.loginId.valid && form.controls.loginId.dirty }">
+        <input class="form-control" type="text" name="loginId" formControlName="loginId" />
         <ul class="help-block">
-          <li *ngIf="form.controls.loginid.errors?.required && form.controls.loginid.dirty">This field is required.</li>
+          <li *ngIf="form.controls.loginId.errors?.required && form.controls.loginId.dirty">This field is required.</li>
         </ul>
       </div>
     </div>

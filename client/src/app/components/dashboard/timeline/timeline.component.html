@@ -1,0 +1,78 @@
+  <div class="row show-hide-message" *ngIf="message && newPost">
+  <div [ngClass]="messageClass">
+    {{ message }}
+  </div>
+</div>  
+
+ 
+   <form [formGroup]="form" name="form" (submit)="onPostSubmit()">
+<div class=" panel panel-default panel-body">
+  <textarea name="content" rows="5" cols="80" placeholder="*Have any issues? Ask here." class="form-control" formControlName="content"></textarea>
+  <br>
+  <a id="post-button" (click)="onPostSubmit()" class="btn btn-primary btn-sm">BroadCast</a>
+</div>
+</form>    
+
+
+
+<div class="panel panel-default" *ngFor="let post of posts">
+
+  <div class="panel-heading">
+      <h3 class="panel-title">
+        BroadCaster:
+        <strong>{{ post.createdBy }}  </strong></h3>
+    </div>
+
+  <div class="panel-body">
+    {{post.content}}
+  </div>
+
+  <div class="panel-footer">
+    <strong>Date: </strong> {{post.createdAt | date:'MMM dd, yyyy'}}
+    <br/>
+
+    <a href="#"><button type="button" name="button" class="btn btn-sm btn-info">Edit</button></a>
+    <a href="#"><button type="button" name="button" class="btn btn-sm btn-danger">Delete</button></a>
+    <div class="dropdown">
+      <button type="button" name="button" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;</span>Votes : {{post.votes}}</button>
+      <div class="dropdown-content">
+        <a href="#">Kasey Miller</a>
+      </div>
+    </div>
+
+   
+  </div>
+  <!-- <ul class="list-group">
+    <li class="list-group-item">
+      <button type="button" name="button" class="btn btn-sm btn-danger">Post Comment</button>
+      <br />
+      <br />
+      <div>
+        <form [formGroup]="commentForm">
+          <textarea name="comment" rows="10" cols="30" class="form-control" formControlName="comment"></textarea>
+          <button type="submit" name="button" class="btn btn-sm btn-info">Post</button>
+          <button type="button" name="button" class="btn btn-sm btn-danger">Cancel</button>
+        </form>
+      </div>
+
+      <li class="list-group-item">
+        <span>
+            Show comments&nbsp;&nbsp;
+            <div class="glyphicon glyphicon-comment"></div>
+          </span>
+      </li>
+
+      <li class="list-group-item">
+        <span>
+            Hide Comments&nbsp;&nbsp;
+            <div class="glyphicon glyphicon-comment"></div>
+          </span>
+      </li>
+
+      <div>
+        <li class="list-group-item">
+          <strong>Jackson Rodgrigues:</strong> I fixed it!
+        </li>
+      </div>
+  </ul> -->
+</div>

@@ -5,10 +5,14 @@ const config = require('../config/database');
 module.exports = (router) => {
 
   router.post('/register', (req, res) => {
+    if(!req.body.name){
+      res.json({ success: false, message: 'You must provide name' });
+    }
+    else {
     if (!req.body.email) {
       res.json({ success: false, message: 'You must provide an e-mail' });
     } else {
-      if (!req.body.loginid) {
+      if (!req.body.loginId) {
         res.json({ success: false, message: 'You must provide a login id' });
       } else {
         if (!req.body.password) {
@@ -17,7 +21,7 @@ module.exports = (router) => {
           let user = new User({
             name: req.body.name,
             email: req.body.email.toLowerCase(),
-            loginid: req.body.loginid.toLowerCase(),
+            loginId: req.body.loginId.toLowerCase(),
             password: req.body.password
           });
           user.save((err) => {
@@ -29,8 +33,8 @@ module.exports = (router) => {
                   if (err.errors.email) {
                     res.json({ success: false, message: err.errors.email.message }); 
                   } else {
-                    if (err.errors.loginid) {
-                      res.json({ success: false, message: err.errors.loginid.message });
+                    if (err.errors.loginId) {
+                      res.json({ success: false, message: err.errors.loginId.message });
                     } else {
                       if (err.errors.password) {
                         res.json({ success: false, message: err.errors.password.message });
@@ -52,6 +56,7 @@ module.exports = (router) => {
           });
         }
       }
+    }
     }
   });
 
@@ -77,7 +82,7 @@ module.exports = (router) => {
     if (!req.params.loginId) {
       res.json({ success: false, message: 'loginId was not provided' }); 
     } else {
-      User.findOne({ loginid: req.params.loginId }, (err, user) => { 
+      User.findOne({ loginId: req.params.loginId }, (err, user) => { 
         if (err) {
           res.json({ success: false, message: err }); 
         } else {
@@ -92,13 +97,13 @@ module.exports = (router) => {
   });
 
     router.post('/login', (req, res) => {
-    if (!req.body.loginid) {
+    if (!req.body.loginId) {
       res.json({ success: false, message: 'No login id provided' });
     } else {
       if (!req.body.password) {
         res.json({ success: false, message: 'No password provided.' });
       } else {
-        User.findOne({ loginid: req.body.loginid }, (err, user) => {
+        User.findOne({ loginId: req.body.loginId }, (err, user) => {
           if (err) {
             res.json({ success: false, message: err });
           } else {
@@ -109,13 +114,13 @@ module.exports = (router) => {
               if (!validPassword) {
                 res.json({ success: false, message: 'Invalid Password' });
               } else {
-                const token = jwt.sign({ loginId: user._id }, config.secret, { expiresIn: '5m' });
+                const token = jwt.sign({ loginId: user._id }, config.secret, { expiresIn: '1hr' });
                 res.json({
                   success: true,
                   message: 'Success!',
                   token: token,
                   user: {
-                    loginid: user.loginid
+                    loginId: user.loginId
                   }
                 });
               }
@@ -124,6 +129,36 @@ module.exports = (router) => {
         });
       }
     }
+  });
+
+  router.use((req, res, next) => {
+    const token = req.headers['authorization'];
+    if (!token) {
+      res.json({ success: false, message: 'No token provided' });
+    } else {
+      jwt.verify(token, config.secret, (err, decoded) => {
+        if (err) {
+          res.json({ success: false, message: 'Token invalid: ' + err });
+        } else {
+          req.decoded = decoded;
+          next();
+        }
+      });
+    }
+  });
+
+   router.get('/profile', (req, res) => {
+    User.findOne({ _id: req.decoded.loginId }).select('loginId email name').exec((err, user) => {
+      if (err) {
+        res.json({ success: false, message: err });
+      } else {
+        if (!user) {
+          res.json({ success: false, message: 'User not found' });
+        } else {
+          res.json({ success: true, user: user });
+        }
+      }
+    });
   });
 
   

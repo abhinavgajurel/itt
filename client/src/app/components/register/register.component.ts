@@ -16,8 +16,8 @@ export class RegisterComponent implements OnInit {
   processing = false;
   emailValid;
   emailMessage;
-  loginidValid;
-  loginidMessage;
+  loginIdValid;
+  loginIdMessage;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,11 +35,11 @@ export class RegisterComponent implements OnInit {
         Validators.maxLength(30), 
         this.validateEmail 
       ])],
-      loginid: ['', Validators.compose([
+      loginId: ['', Validators.compose([
         Validators.required, 
         Validators.minLength(3), 
         Validators.maxLength(15),
-        this.validateLoginid
+        this.validateLoginId
       ])],
       password: ['', Validators.compose([
         Validators.required, 
@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit {
 
   disableForm() {
     this.form.controls['email'].disable();
-    this.form.controls['loginid'].disable();
+    this.form.controls['loginId'].disable();
     this.form.controls['name'].disable();
     this.form.controls['password'].disable();
     this.form.controls['confirm'].disable();
@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit {
   enableForm() {
     this.form.controls['email'].enable();
     this.form.controls['name'].enable();
-    this.form.controls['loginid'].enable();
+    this.form.controls['loginId'].enable();
     this.form.controls['password'].enable();
     this.form.controls['confirm'].enable();
   }
@@ -79,12 +79,12 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  validateLoginid(controls) {
+  validateLoginId(controls) {
     const regExp = new RegExp(/^[a-zA-Z0-9]+$/);
     if (regExp.test(controls.value)) {
       return null; 
     } else {
-      return { 'validateLoginid': true } 
+      return { 'validateLoginId': true } 
     }
   }
 
@@ -112,7 +112,7 @@ export class RegisterComponent implements OnInit {
     this.disableForm(); 
     const user = {
       email: this.form.get('email').value,
-      loginid: this.form.get('loginid').value,
+      loginId: this.form.get('loginId').value,
       password: this.form.get('password').value, 
       name: this.form.get('name').value
     }
@@ -148,13 +148,13 @@ export class RegisterComponent implements OnInit {
   }
 
   checkLogin() {
-    this.authService.checkLogin(this.form.get('loginid').value).subscribe(data => {
+    this.authService.checkLogin(this.form.get('loginId').value).subscribe(data => {
       if (!data.success) {
-        this.loginidValid = false; 
-        this.loginidMessage = data.message; 
+        this.loginIdValid = false; 
+        this.loginIdMessage = data.message; 
       } else {
-        this.loginidValid = true; 
-        this.loginidMessage = data.message; 
+        this.loginIdValid = true; 
+        this.loginIdMessage = data.message; 
       }
     });
   }

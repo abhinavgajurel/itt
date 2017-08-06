@@ -35,11 +35,11 @@ const emailValidators = [
   }
 ];
 
-let loginIdLengthChecker = (loginid) => {
-  if (!loginid) {
+let loginIdLengthChecker = (loginId) => {
+  if (!loginId) {
     return false; 
   } else {
-    if (loginid.length < 3 || loginid.length > 15) {
+    if (loginId.length < 3 || loginId.length > 15) {
       return false; 
     } else {
       return true; 
@@ -47,12 +47,12 @@ let loginIdLengthChecker = (loginid) => {
   }
 };
 
-let validLoginId = (loginid) => {
-  if (!loginid) {
+let validLoginId = (loginId) => {
+  if (!loginId) {
     return false;
   } else {
     const regExp = new RegExp(/^[a-zA-Z0-9]+$/);
-    return regExp.test(loginid);
+    return regExp.test(loginId);
   }
 };
 
@@ -102,7 +102,7 @@ const passwordValidators = [
 const userSchema = new Schema({
   name: {type : String, required:true, unique: false},  
   email: { type: String, required: true, unique: true, lowercase: true, validate: emailValidators },
-  loginid: { type: String, required: true, unique: true, lowercase: true, validate: loginIdValidators },
+  loginId: { type: String, required: true, unique: true, lowercase: true, validate: loginIdValidators },
   password: { type: String, required: true, validate: passwordValidators }
 });
 
