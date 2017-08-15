@@ -41,3 +41,9 @@ textarea {
  .dropdown:hover .dropbtn {
      background-color: #3e8e41;
  }
+
+ #my-alert{
+     position: fixed;
+    bottom: 0px;
+    left: 15px;
+ }

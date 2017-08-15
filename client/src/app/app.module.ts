@@ -17,11 +17,6 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TimelineComponent } from './components/dashboard/timeline/timeline.component';
 
-import {MdSnackBar} from '@angular/material';
-import {OVERLAY_PROVIDERS} from '@angular/material';
-import {ScrollStrategyOptions} from '@angular/material';
-import {ScrollDispatcher} from '@angular/material';
-import {Platform} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -41,7 +36,7 @@ import {Platform} from '@angular/material';
     HttpModule,
     FlashMessagesModule
   ],
-  providers: [AuthService,PostService, MdSnackBar, OVERLAY_PROVIDERS, ScrollStrategyOptions,ScrollDispatcher, Platform],
+  providers: [AuthService,PostService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PostService} from '../../../services/post.service';
-import { AuthService} from '../../../services/auth.service';
+import { PostService } from '../../../services/post.service';
+import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
-import {MdSnackBar} from '@angular/material';
 
 
 @Component({
@@ -13,53 +12,54 @@ import {MdSnackBar} from '@angular/material';
 })
 export class TimelineComponent implements OnInit {
 
-  posting = false;
   form;
+  editForm;
   username;
   loginId;
   messageClass;
   message;
   posts;
+  operations = false;
 
 
+  constructor(private authService: AuthService, private postService: PostService, private formBuilder: FormBuilder, private router: Router) {
 
-  constructor( private snackBar : MdSnackBar ,private authService : AuthService, private postService : PostService, private formBuilder : FormBuilder,private router: Router) { 
-    
-   this.form = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       content: ['', Validators.compose([
         Validators.required,
         Validators.maxLength(100),
       ])]
     });
+
+    this.editForm = this.formBuilder.group({
+      editContent: ['', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100),
+      ])]
+    });
+
+
   };
 
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 2000,
-    });
-  }
-
   onPostSubmit() {
-    this.posting = true;
 
     const post = {
       content: this.form.get('content').value,
       createdBy: this.username,
-      createdLoginId : this.loginId
+      createdLoginId: this.loginId
     }
 
     this.postService.newPost(post).subscribe(data => {
       if (!data.success) {
+        this.operations = true;
         this.messageClass = 'alert alert-danger';
         this.message = data.message;
-        this.posting = false;
       } else {
+        this.operations = true;
         this.messageClass = 'alert alert-success';
         this.message = data.message;
         this.getAllPosts();
-        this.posting = false;
-          this.message = false;
-          this.form.reset();
+        this.form.reset();
       }
     });
   }
@@ -67,7 +67,9 @@ export class TimelineComponent implements OnInit {
   getAllPosts() {
     this.postService.getAllPosts().subscribe(data => {
       this.posts = data.posts;
-      this.message = false;
+      setTimeout(() => {
+      this.operations = false;
+        }, 3000);
     });
   }
 
@@ -80,9 +82,11 @@ export class TimelineComponent implements OnInit {
   deletePost(id) {
     this.postService.deletePost(id).subscribe(data => {
       if (!data.success) {
+        this.operations = true;
         this.messageClass = 'alert alert-danger';
         this.message = data.message;
       } else {
+        this.operations = true;
         this.messageClass = 'alert alert-success';
         this.message = data.message;
         this.getAllPosts();
@@ -90,9 +94,36 @@ export class TimelineComponent implements OnInit {
     });
   }
 
+  editPost(post) {
 
-  
+    const newPost = {
+      _id: post._id,
+      content: this.editForm.get('content').value,
+      createdBy: this.username,
+      createdLoginId: this.loginId
+    }
+
+    this.postService.editPost(newPost).subscribe(data => {
+      if (!data.success) {
+        this.operations = true;
+        this.messageClass = 'alert alert-danger';
+        this.message = data.message;
+        this.editForm.reset();
+      } else {
+        this.operations = true;
+        this.messageClass = 'alert alert-success';
+        this.message = data.message;
+        this.getAllPosts();
+        this.editForm.reset();
+      }
+    });
+  }
+
+
+
+
   ngOnInit() {
+
 
     this.authService.getProfile().subscribe(profile => {
       this.username = profile.user.name;

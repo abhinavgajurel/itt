@@ -30,7 +30,7 @@ module.exports = (router) => {
                             res.json({ success: false, message: err });
                         }
                     } else {
-                        res.json({ success: true, message: 'Post saved!' });
+                        res.json({ success: true, message: 'You have successfully broadcasted the post' });
                     }
                 });
             }
@@ -51,7 +51,7 @@ module.exports = (router) => {
         }).sort({ '_id': -1 });
     });
 
-    router.put('/updatePost', (req, res) => {
+    router.put('/editPost', (req, res) => {
         if (!req.body._id) {
             res.json({ success: false, message: 'No post id provided' });
         } else {
@@ -62,14 +62,14 @@ module.exports = (router) => {
                     if (!post) {
                         res.json({ success: false, message: 'Post id was not found.' });
                     } else {
-                        User.findOne({ _id: req.decoded.userId }, (err, user) => {
+                        User.findOne({ _id: req.decoded.loginId }, (err, user) => {
                             if (err) {
                                 res.json({ success: false, message: err });
                             } else {
                                 if (!user) {
                                     res.json({ success: false, message: 'Unable to authenticate user.' });
                                 } else {
-                                    if (user.username !== post.createdBy) {
+                                    if (user.loginId !== post.createdLoginId) {
                                         res.json({ success: false, message: 'You are not authorized to edit this post.' });
                                     } else {
                                         post.content = req.body.content;
@@ -81,7 +81,7 @@ module.exports = (router) => {
                                                     res.json({ success: false, message: err });
                                                 }
                                             } else {
-                                                res.json({ success: true, message: 'Post Updated!' });
+                                                res.json({ success: true, message: 'Your post has been updated!' });
                                             }
                                         });
                                     }
@@ -119,7 +119,7 @@ module.exports = (router) => {
                                             if (err) {
                                                 res.json({ success: false, message: err });
                                             } else {
-                                                res.json({ success: true, message: 'Post deleted!' });
+                                                res.json({ success: true, message: 'You have successfully deleted the post!' });
                                             }
                                         });
                                     }
