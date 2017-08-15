@@ -15,7 +15,8 @@ module.exports = (router) => {
                 const c = req.body.content; //need to check
                 const post = new Post({
                     content: c,
-                    createdBy: req.body.createdBy
+                    createdBy: req.body.createdBy,
+                    createdLoginId: req.body.createdLoginId
                 });
                 post.save((err) => {
                     if (err) {
@@ -104,14 +105,14 @@ module.exports = (router) => {
                     if (!post) {
                         res.json({ success: false, messasge: 'Post was not found' });
                     } else {
-                        User.findOne({ _id: req.decoded.userId }, (err, user) => {
+                        User.findOne({ _id: req.decoded.loginId }, (err, user) => {
                             if (err) {
                                 res.json({ success: false, message: err });
                             } else {
                                 if (!user) {
                                     res.json({ success: false, message: 'Unable to authenticate user.' });
                                 } else {
-                                    if (user.username !== post.createdBy) {
+                                    if (user.loginId !== post.createdLoginId) {
                                         res.json({ success: false, message: 'You are not authorized to delete this post' });
                                     } else {
                                         post.remove((err) => {
@@ -142,21 +143,18 @@ module.exports = (router) => {
                     if (!post) {
                         res.json({ success: false, message: 'Post not found.' });
                     } else {
-                        User.findOne({ _id: req.decoded.userId }, (err, user) => {
+                        User.findOne({ _id: req.decoded.loginId }, (err, user) => {
                             if (err) {
                                 res.json({ success: false, message: 'Something went wrong.' });
                             } else {
                                 if (!user) {
                                     res.json({ success: false, message: 'Could not authenticate user.' });
                                 } else {
-                                    if (user.username === post.createdBy) {
-                                        res.json({ success: false, messagse: 'Cannot vote your own post.' });
-                                    } else {
-                                        if (post.likedBy.includes(user.username)) {
+                                        if (post.votedBy.includes(user.loginId)) {
                                             res.json({ success: false, message: 'You already voted for this post.' });
                                         } else {
                                             post.votes++;
-                                            post.votedBy.push(user.username);
+                                            post.votedBy.push(user.loginId);
                                             post.save((err) => {
                                                 if (err) {
                                                     res.json({ success: false, message: 'Something went wrong.' });
@@ -165,7 +163,7 @@ module.exports = (router) => {
                                                 }
                                             });
                                         }
-                                    }
+                                    
                                 }
                             }
                         });

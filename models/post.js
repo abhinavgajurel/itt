@@ -43,6 +43,7 @@ const commentValidators = [
 const postSchema = new Schema({
   content: { type: String, required: true, validate: postValidator },
   createdBy: { type: String },
+  createdLoginId : { type: String},
   createdAt: { type: Date, default: Date.now() },
   votes: { type: Number, default: 0 },
   votedBy: { type: Array },
