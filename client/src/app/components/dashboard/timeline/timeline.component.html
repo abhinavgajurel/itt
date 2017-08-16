@@ -2,7 +2,7 @@
   <div class=" panel panel-default panel-body">
     <textarea name="content" rows="5" cols="80" placeholder="*Have any issues? Ask here." class="form-control" formControlName="content"></textarea>
     <br>
-    <button id="post-button" (click)="onPostSubmit()" [disabled]="!form.valid" class="btn btn-primary btn-sm">BroadCast</button>
+    <button id="post-button" (click)="onPostSubmit()" [disabled]="!form.valid" class="btn btn-primary btn-sm">Ask</button>
   </div>
 </form>
 
@@ -14,7 +14,7 @@
     <div class="row">
       <div class=" col-xs-6">
         <h3 class="panel-title">
-          BroadCaster:
+          Author:
           <strong>{{ post.createdBy }}  </strong></h3>
       </div>
       <div class=" col-xs-6" align="right">
@@ -33,12 +33,14 @@
       <div class=" col-xs-6">
         <div class="dropdown">
 
-          <button *ngIf="post.votedBy.includes(this.loginId)" type="button" name="button" class="btn btn-sm btn-success" (click)="votePost(post._id)">
-        <span class="glyphicon glyphicon-thumbs-up">&nbsp;</span>{{post.votes}}</button>
+          <button *ngIf="post.votedBy.includes(this.loginId)" type="button" name="button" class="btn btn-sm btn-success" (click)="unVotePost(post._id)">
+        <span class="glyphicon glyphicon-thumbs-up">&nbsp;</span>voted! {{post.votes}}</button>
 
-        <button *ngIf="!post.votedBy.includes(this.loginId)" type="button" name="button" class="btn btn-sm btn-default" (click)="votePost(post._id)">
-        <span class="glyphicon glyphicon-thumbs-up">&nbsp;</span>{{post.votes}}</button>
-          
+          <button *ngIf="!post.votedBy.includes(this.loginId)" type="button" name="button" class="btn btn-sm btn-default" (click)="votePost(post._id)">
+        <span class="glyphicon glyphicon-thumbs-up">&nbsp;</span>vote {{post.votes}}</button>
+
+          <button type="button" name="button" class="btn btn-sm btn-info" (click)="toggleAnswerDiv(post._id)">Answers</button>
+
           <!-- <div class="dropdown-content">
             <a href="#" *ngFor="let voter of post.votedBy">{{ voter }}</a>
           </div> -->
@@ -46,104 +48,87 @@
       </div>
 
       <div class=" col-xs-6" align="right">
-        <button *ngIf="username === post.createdBy" type="button" name="editButton" class="btn btn-sm btn-info" data-toggle="modal"
-          data-target="#editModal"><span class="glyphicon glyphicon-edit"></span></button>
+        <button *ngIf="username === post.createdBy" type="button" name="editButton" class="btn btn-sm btn-warning" data-toggle="modal"
+          data-target="#editModal" (click)="loadEditPost(post._id)"><span class="glyphicon glyphicon-edit"></span></button>
 
         <button *ngIf="username === post.createdBy" type="button" name="deleteButton" class="btn btn-sm btn-danger" data-toggle="modal"
-          data-target="#deleteModal"><span class="glyphicon glyphicon-remove"></span></button>
+          data-target="#deleteModal" (click)="loadDeletePost(post._id)"><span class="glyphicon glyphicon-remove"></span></button>
 
       </div>
     </div>
 
   </div>
-  <!-- <ul class="list-group">
+
+
+  <div id="answer-div" *ngIf="viewAnswers.includes(post._id)">
+  <ul class="list-group">
     <li class="list-group-item">
-      <button type="button" name="button" class="btn btn-sm btn-danger">Post Comment</button>
-      <br />
-      <br />
       <div>
-        <form [formGroup]="commentForm">
-          <textarea name="comment" rows="10" cols="30" class="form-control" formControlName="comment"></textarea>
-          <button type="submit" name="button" class="btn btn-sm btn-info">Post</button>
-          <button type="button" name="button" class="btn btn-sm btn-danger">Cancel</button>
+        <form [formGroup]="answerForm">
+          <textarea name="answer" rows="2" cols="30" class="form-control" formControlName="answer" placeholder="*Answer here"></textarea>
         </form>
       </div>
-
-      <li class="list-group-item">
-        <span>
-            Show comments&nbsp;&nbsp;
-            <div class="glyphicon glyphicon-comment"></div>
-          </span>
-      </li>
-
-      <li class="list-group-item">
-        <span>
-            Hide Comments&nbsp;&nbsp;
-            <div class="glyphicon glyphicon-comment"></div>
-          </span>
-      </li>
-
-      <div>
-        <li class="list-group-item">
-          <strong>Jackson Rodgrigues:</strong> I fixed it!
+      
+    </li>
+    <div class="panel-footer">
+        <button type="submit" name="button" class="btn btn-sm btn-primary" (click)="postAnswer(post._id)" [disabled]="!answerForm.valid">Post</button>
+      </div>
+      <div *ngIf="post.answers.length > -1">
+        <li *ngFor="let answer of post.answers"  class="list-group-item">
+          <strong>{{answer.answerBy}}:</strong> {{answer.answer}}
         </li>
       </div>
-  </ul> -->
+  </ul>
+  </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="deleteModal" role="dialog">
-    <div class="modal-dialog">
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Delete Confirmation</h4>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure you want to delete this post</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="deletePost(post._id)" data-dismiss="modal">Yes</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 
-        </div>
+
+
+</div>
+
+<div class="modal fade" id="deleteModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Delete Confirmation</h4>
       </div>
-
+      <div class="modal-body">
+        <p>Are you sure you want to delete this post</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="deletePost()" data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
     </div>
+
   </div>
+</div>
 
-  <div class="modal fade" id="editModal" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Post</h4>
-        </div>
-        <div class="modal-body">
-         <form [formGroup]="editForm" name="editForm">
-        <div class=" panel panel-default panel-body">
-          <textarea name="editContent" rows="5" cols="80" class="form-control" formControlName="editContent" [value]="post.content"></textarea>
-          <br>
-  </div>
-</form> 
-
-        
-       
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="editPost(post)" data-dismiss="modal">Edit</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-
-        </div>
+<div class="modal fade" id="editModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Post</h4>
       </div>
-
+      <div class="modal-body">
+        <form [formGroup]="editForm" name="editForm">
+          <div class=" panel panel-default panel-body">
+            <textarea name="editContent" rows="5" cols="80" class="form-control" formControlName="editContent" [(ngModel)]="editPostContent"></textarea>
+            <br>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="editPost()" data-dismiss="modal">Edit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
     </div>
   </div>
 </div>
+
 
 
 <div [ngClass]="messageClass" role="alert" id="my-alert" *ngIf="operations">

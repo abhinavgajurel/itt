@@ -36,6 +36,11 @@ export class PostService {
     return this.http.put(this.domain + 'posts/votePost/', broadcastData, this.options).map(res => res.json());
   }
 
+  unVotePost(id) {
+    const broadcastData = { id: id };
+    return this.http.put(this.domain + 'posts/unVotePost/', broadcastData, this.options).map(res => res.json());
+  }
+
   deletePost(id) {
     this.createAuthenticationHeaders();
     return this.http.delete(this.domain + 'posts/deletePost/' + id, this.options).map(res => res.json());
@@ -44,6 +49,21 @@ export class PostService {
   editPost(broadcastData) {
     this.createAuthenticationHeaders();
     return this.http.put(this.domain + 'posts/editPost/', broadcastData, this.options).map(res => res.json());
+  }
+
+  getPost(id) {
+    this.createAuthenticationHeaders();
+    return this.http.get(this.domain + 'posts/getPost/' + id, this.options).map(res => res.json());
+  }
+
+   postAnswer(id, answer) {
+    this.createAuthenticationHeaders();
+    const postData = {
+      id: id,
+      answer: answer
+    }
+    return this.http.post(this.domain + 'posts/answerPost', postData, this.options).map(res => res.json());
+
   }
 
 }

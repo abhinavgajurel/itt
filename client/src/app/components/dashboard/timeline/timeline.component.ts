@@ -14,12 +14,19 @@ export class TimelineComponent implements OnInit {
 
   form;
   editForm;
+  answerForm;
   username;
   loginId;
   messageClass;
   message;
   posts;
   operations = false;
+  editPostContent = undefined;
+  editPostId = undefined;
+  deletePostId = undefined;
+  newAnswer = [];
+  enabledAnswers = [];
+  viewAnswers = [];
 
 
   constructor(private authService: AuthService, private postService: PostService, private formBuilder: FormBuilder, private router: Router) {
@@ -38,6 +45,15 @@ export class TimelineComponent implements OnInit {
       ])]
     });
 
+    this.answerForm = this.formBuilder.group({
+      answer: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(100)
+      ])]
+    })
+
+
 
   };
 
@@ -52,11 +68,11 @@ export class TimelineComponent implements OnInit {
     this.postService.newPost(post).subscribe(data => {
       if (!data.success) {
         this.operations = true;
-        this.messageClass = 'alert alert-danger';
+        this.messageClass = 'alert alert-danger fade in';
         this.message = data.message;
       } else {
         this.operations = true;
-        this.messageClass = 'alert alert-success';
+        this.messageClass = 'alert alert-success fade in';
         this.message = data.message;
         this.getAllPosts();
         this.form.reset();
@@ -79,26 +95,32 @@ export class TimelineComponent implements OnInit {
     });
   }
 
-  deletePost(id) {
-    this.postService.deletePost(id).subscribe(data => {
+  unVotePost(id) {
+    this.postService.unVotePost(id).subscribe(data => {
+      this.getAllPosts();
+    });
+  }
+
+  deletePost() {
+    this.postService.deletePost(this.deletePostId).subscribe(data => {
       if (!data.success) {
         this.operations = true;
-        this.messageClass = 'alert alert-danger';
+        this.messageClass = 'alert alert-danger fade in';
         this.message = data.message;
       } else {
         this.operations = true;
-        this.messageClass = 'alert alert-success';
+        this.messageClass = 'alert alert-success fade in';
         this.message = data.message;
         this.getAllPosts();
       }
     });
   }
 
-  editPost(post) {
+  editPost() {
 
     const newPost = {
-      _id: post._id,
-      content: this.editForm.get('content').value,
+      _id: this.editPostId,
+      content: this.editForm.get('editContent').value,
       createdBy: this.username,
       createdLoginId: this.loginId
     }
@@ -106,18 +128,68 @@ export class TimelineComponent implements OnInit {
     this.postService.editPost(newPost).subscribe(data => {
       if (!data.success) {
         this.operations = true;
-        this.messageClass = 'alert alert-danger';
+        this.messageClass = 'alert alert-danger fade in';
         this.message = data.message;
         this.editForm.reset();
       } else {
         this.operations = true;
-        this.messageClass = 'alert alert-success';
+        this.messageClass = 'alert alert-success fade in';
         this.message = data.message;
         this.getAllPosts();
         this.editForm.reset();
       }
     });
   }
+
+  loadDeletePost(id){
+
+    this.deletePostId = id;
+  }
+
+  loadEditPost(id){
+
+    this.postService.getPost(id).subscribe(data => {
+      if(!data.success){
+        this.messageClass = 'alert alert-danger fade in';
+        this.message = data.message;
+        this.editPostContent = undefined;
+        this.editPostId = undefined;
+
+      }else{
+        this.editPostContent = data.post.content;
+        this.editPostId = data.post._id;
+      }
+    })
+
+  }
+
+
+  postAnswer(id) {
+    const answer = this.answerForm.get('answer').value;
+    this.postService.postAnswer(id, answer).subscribe(data => {
+      this.getAllPosts();
+      this.answerForm.reset();
+      this.operations = true;
+      this.messageClass = 'alert alert-success fade in';
+      this.message = data.message;
+    });
+  }
+
+
+  toggleAnswerDiv(id){
+
+    if(!this.viewAnswers.includes(id)){
+    this.viewAnswers.push(id);
+    this.answerForm.reset();
+    }else{
+      const index = this.viewAnswers.indexOf(id);
+      this.viewAnswers.splice(index, 1);
+      this.answerForm.reset();
+    }
+
+
+  }
+
 
 
 

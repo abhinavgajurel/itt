@@ -4,6 +4,8 @@ import { HomeComponent} from '../components/home/home.component';
 import { RegisterComponent} from '../components/register/register.component';
 import { LoginComponent} from '../components/login/login.component';
 import { DashboardComponent} from '../components/dashboard/dashboard.component';
+import { NewProjectComponent} from '../components/new-project/new-project.component';
+
 
 
 
@@ -24,6 +26,10 @@ const appRoutes: Routes = [
   {
     path: 'dashboard',
     component : DashboardComponent
+  },
+  {
+    path: 'newproject',
+    component : NewProjectComponent
   }
 ];
 

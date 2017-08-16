@@ -16,6 +16,7 @@ import { PostService } from './services/post.service';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TimelineComponent } from './components/dashboard/timeline/timeline.component';
+import { NewProjectComponent } from './components/new-project/new-project.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { TimelineComponent } from './components/dashboard/timeline/timeline.comp
     LoginComponent,
     DashboardComponent,
     TimelineComponent,
+    NewProjectComponent,
   ],
   imports: [
     BrowserModule,

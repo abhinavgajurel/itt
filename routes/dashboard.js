@@ -30,7 +30,7 @@ module.exports = (router) => {
                             res.json({ success: false, message: err });
                         }
                     } else {
-                        res.json({ success: true, message: 'You have successfully broadcasted the post' });
+                        res.json({ success: true, message: 'You have successfully posted your query' });
                     }
                 });
             }
@@ -173,9 +173,53 @@ module.exports = (router) => {
         }
     });
 
-    router.post('/comment', (req, res) => {
-        if (!req.body.comment) {
-            res.json({ success: false, message: 'No comment provided' });
+router.put('/unVotePost', (req, res) => {
+        if (!req.body.id) {
+            res.json({ success: false, message: 'No id was provided.' });
+        } else {
+            Post.findOne({ _id: req.body.id }, (err, post) => {
+                if (err) {
+                    res.json({ success: false, message: 'Invalid post id' });
+                } else {
+                    if (!post) {
+                        res.json({ success: false, message: 'Post not found.' });
+                    } else {
+                        User.findOne({ _id: req.decoded.loginId }, (err, user) => {
+                            if (err) {
+                                res.json({ success: false, message: 'Something went wrong.' });
+                            } else {
+                                if (!user) {
+                                    res.json({ success: false, message: 'Could not authenticate user.' });
+                                } else {
+                                        if (post.votedBy.includes(user.loginId)) {
+                                            post.votes--;
+                                            const arrayIndex = post.votedBy.indexOf(user.loginId);
+                                            post.votedBy.splice(arrayIndex, 1);
+                                            post.save((err) => {
+                                                if (err) {
+                                                    res.json({ success: false, message: 'Something went wrong.' });
+                                                } else {
+                                                    res.json({ success: true, message: 'Post Voted!' });
+                                                }
+                                            });
+                                        } else {
+                                            res.json({ success: false, message: 'You have not voted this post.' });
+                                            
+                                        }
+                                    
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+
+    router.post('/answerPost', (req, res) => {
+        if (!req.body.answer) {
+            res.json({ success: false, message: 'No answer provided' });
         } else {
             
             if (!req.body.id) {
@@ -189,22 +233,23 @@ module.exports = (router) => {
                         if (!post) {
                             res.json({ success: false, message: 'Post not found.' });
                         } else {
-                            User.findOne({ _id: req.decoded.userId }, (err, user) => {
+                            User.findOne({ _id: req.decoded.loginId }, (err, user) => {
                                 if (err) {
                                     res.json({ success: false, message: 'Something went wrong' });
                                 } else {
                                     if (!user) {
                                         res.json({ success: false, message: 'User not found.' });
                                     } else {
-                                        post.comments.push({
-                                            comment: req.body.comment,
-                                            commentator: user.username
+                                        const a = req.body.answer;
+                                        post.answers.push({
+                                            answer: a,
+                                            answerBy: user.name
                                         });
                                         post.save((err) => {
                                             if (err) {
                                                 res.json({ success: false, message: 'Something went wrong.' });
                                             } else {
-                                                res.json({ success: true, message: 'Comment saved' });                                            }
+                                                res.json({ success: true, message: 'Your answer has been posted!' });                                            }
                                         });
                                     }
                                 }
@@ -215,6 +260,38 @@ module.exports = (router) => {
             }
         }
     });
+
+    router.get('/getPost/:id', (req, res) => {
+    if (!req.params.id) {
+      res.json({ success: false, message: 'No post id provided.' });
+    } else {
+      Post.findOne({ _id: req.params.id }, (err, post) => {
+        if (err) {
+          res.json({ success: false, message: 'Not a valid post id' });
+        } else {
+          if (!post) {
+            res.json({ success: false, message: 'post not found.' });
+          } else {
+            User.findOne({ _id: req.decoded.loginId }, (err, user) => {
+              if (err) {
+                res.json({ success: false, message: err });
+              } else {
+                if (!user) {
+                  res.json({ success: false, message: 'Unable to authenticate user' });
+                } else {
+                  if (user.loginId !== post.createdLoginId) {
+                    res.json({ success: false, message: 'You are not authorized to eidt this post.' });
+                  } else {
+                    res.json({ success: true, post: post });
+                  }
+                }
+              }
+            });
+          }
+        }
+      });
+    }
+  });
 
 
     return router;

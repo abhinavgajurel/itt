@@ -21,11 +21,11 @@ const postValidator = [
   },
 ];
 
-let commentLengthChecker = (comment) => {
-  if (!comment[0]) {
+let answerLengthChecker = (answer) => {
+  if (!answer[0]) {
     return false;
   } else {
-    if (comment[0].length < 1 || comment[0].length > 100) {
+    if (answer[0].length < 1 || answer[0].length > 100) {
       return false;
     } else {
       return true;
@@ -33,10 +33,10 @@ let commentLengthChecker = (comment) => {
   }
 };
 
-const commentValidators = [
+const answerValidators = [
   {
-    validator: commentLengthChecker,
-    message: 'Comments may not exceed 100 characters.'
+    validator: answerLengthChecker,
+    message: 'answers may not exceed 100 characters.'
   }
 ];
 
@@ -47,9 +47,9 @@ const postSchema = new Schema({
   createdAt: { type: Date, default: Date.now() },
   votes: { type: Number, default: 0 },
   votedBy: { type: Array },
-  comments: [{
-    comment: { type: String, validate: commentValidators },
-    commentator: { type: String }
+  answers: [{
+    answer: { type: String, validate: answerValidators },
+    answerBy: { type: String }
   }]
 });
 

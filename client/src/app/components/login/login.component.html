@@ -1,11 +1,16 @@
-<div id="login-div" class="container panel panel-default ">
-  <h2 class="page-header">Login</h2>
-  
-  <div class="row show-hide-message container">
+
+<div class="container">
+<div class="row show-hide-message">
     <div [ngClass]="messageClass">
       {{ message }}
     </div>
   </div>
+</div>
+
+<div id="login-div" class="container panel panel-default ">
+  <h2 class="page-header">Login</h2>
+  
+  
   <form [formGroup]="form" (submit)="onLoginSubmit()">
 
     <div class="form-group">
