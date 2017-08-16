@@ -13,6 +13,7 @@ import { RegisterComponent } from './components/register/register.component';
 
 import { AuthService } from './services/auth.service';
 import { PostService } from './services/post.service';
+import { ProjectService } from './services/project.service';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TimelineComponent } from './components/dashboard/timeline/timeline.component';
@@ -38,7 +39,7 @@ import { NewProjectComponent } from './components/new-project/new-project.compon
     HttpModule,
     FlashMessagesModule
   ],
-  providers: [AuthService,PostService],
+  providers: [AuthService,PostService,ProjectService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
