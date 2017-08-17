@@ -5,6 +5,7 @@ import { RegisterComponent} from '../components/register/register.component';
 import { LoginComponent} from '../components/login/login.component';
 import { DashboardComponent} from '../components/dashboard/dashboard.component';
 import { NewProjectComponent} from '../components/new-project/new-project.component';
+import { ProjectHomeComponent} from '../components/project-home/project-home.component';
 
 
 
@@ -21,7 +22,6 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent
-
   },
   {
     path: 'dashboard',
@@ -30,6 +30,10 @@ const appRoutes: Routes = [
   {
     path: 'newproject',
     component : NewProjectComponent
+  },
+  {
+    path: 'projectHome/:id',
+    component: ProjectHomeComponent,
   }
 ];
 

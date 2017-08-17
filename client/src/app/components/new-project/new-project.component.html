@@ -1,11 +1,14 @@
-<div class="container panel panel-default">
-  <h2 class="page-header">Create New Project</h2>
-
-  <div class="row show-hide-message container">
+<div class="container">
+<div class="row show-hide-message">
     <div [ngClass]="messageClass">
       {{ message }}
     </div>
   </div>
+</div>
+
+
+<div class="container panel panel-default">
+  <h2 class="page-header">Create New Project</h2>
 
   <form [formGroup]="newProjectForm" (submit)="createNewProject()">
 
@@ -27,11 +30,11 @@
     <div class="form-group">
       <label for="projectMembers">Add Project Members</label>
       <div class="container" *ngFor="let member of members">
-        <label class="checkbox-inline"><input type="checkbox" value="">{{member.name}}</label>
+        <label class="checkbox-inline"><input type="checkbox" formControlName="selectedMembers" value="member" (change)="updateMembers(member, $event)">{{member.name}}</label>
       </div>
     </div>
 
-    <input [disabled]="!newProjectForm.valid" type="submit" class="btn btn-primary" value="Create" />
+    <input [disabled]="!newProjectForm.valid" type="submit" class="btn btn-primary" />
     <button type="button" name="button" class="btn btn-default" (click)="goBack()">Go Back</button>
 
     <br>

@@ -7,16 +7,16 @@ export class ProjectService {
 
   options;
   authToken;
-  domain = "http://localhost:8080/";
+  domain = this.authService.domain;
 
-  constructor(private authService : AuthService, private http: Http) { }
+  constructor(private authService: AuthService, private http: Http) { }
 
   createAuthenticationHeaders() {
-    this.loadToken(); 
+    this.loadToken();
     this.options = new RequestOptions({
       headers: new Headers({
-        'Content-Type': 'application/json', 
-        'authorization': this.authToken 
+        'Content-Type': 'application/json',
+        'authorization': this.authToken
       })
     });
   }
@@ -26,10 +26,21 @@ export class ProjectService {
   }
 
 
-  getAllMembers(){
+  getAllMembers() {
 
     this.createAuthenticationHeaders();
     return this.http.get(this.domain + 'projects/allUsers', this.options).map(res => res.json());
+
+  }
+
+  createNewProject(project) {
+    this.createAuthenticationHeaders();
+    return this.http.post(this.domain + 'projects/createproject', project, this.options).map(res => res.json());
+  }
+
+  loadAllProjects(){
+    this.createAuthenticationHeaders();
+    return this.http.get(this.domain + 'projects/allProjects', this.options).map(res => res.json());
 
   }
 

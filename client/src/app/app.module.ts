@@ -18,6 +18,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TimelineComponent } from './components/dashboard/timeline/timeline.component';
 import { NewProjectComponent } from './components/new-project/new-project.component';
+import { ProjectHomeComponent } from './components/project-home/project-home.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { NewProjectComponent } from './components/new-project/new-project.compon
     DashboardComponent,
     TimelineComponent,
     NewProjectComponent,
+    ProjectHomeComponent,
   ],
   imports: [
     BrowserModule,
