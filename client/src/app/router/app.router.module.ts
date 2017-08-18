@@ -6,8 +6,7 @@ import { LoginComponent} from '../components/login/login.component';
 import { DashboardComponent} from '../components/dashboard/dashboard.component';
 import { NewProjectComponent} from '../components/new-project/new-project.component';
 import { ProjectHomeComponent} from '../components/project-home/project-home.component';
-
-
+import { AuthGuard } from '../guards/auth.guard';
 
 
 const appRoutes: Routes = [
@@ -25,15 +24,18 @@ const appRoutes: Routes = [
   },
   {
     path: 'dashboard',
-    component : DashboardComponent
+    component : DashboardComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'newproject',
-    component : NewProjectComponent
+    component : NewProjectComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'projectHome/:id',
     component: ProjectHomeComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

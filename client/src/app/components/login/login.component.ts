@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { AuthGuard } from '../../guards/auth.guard';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private authGuard : AuthGuard
   ) {
     this.createForm(); 
   }
@@ -65,11 +67,19 @@ export class LoginComponent implements OnInit {
           } else {
             this.router.navigate(['/dashboard']);
           }
-        }, 2000);
+        }, 1000);
       }
     });
   }
 
   ngOnInit() {
+
+    if (this.authGuard.redirectUrl) {
+      this.messageClass = 'alert alert-danger';
+      this.message = 'Please login to view the page';
+      this.previousUrl = this.authGuard.redirectUrl;
+      this.authGuard.redirectUrl = undefined;
+    }
+
     }
   }

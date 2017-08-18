@@ -18,7 +18,8 @@ module.exports = (router) => {
     }).sort({ '_id': -1 });
   });
 
-  router.get('/allProjects', (req, res) => {
+  router.get('/allProjects/:loginId', (req, res) => {
+    projectR = [];
     Project.find({}, (err, projects) => {
       if (err) {
         res.json({ success: false, message: err });
@@ -26,7 +27,12 @@ module.exports = (router) => {
         if (![projects]) {
           res.json({ success: false, message: 'Currently there are no projects' });
         } else {
-          res.json({ success: true, projects: projects });
+          projects.forEach(project => {
+            if(project.members.includes(req.params.loginId)){
+              projectR.push(project);
+            }
+          });
+          res.json({ success: true, projects: projectR });
         }
       }
     }).sort({ '_id': -1 });

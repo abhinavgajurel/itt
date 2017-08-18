@@ -38,9 +38,9 @@ export class ProjectService {
     return this.http.post(this.domain + 'projects/createproject', project, this.options).map(res => res.json());
   }
 
-  loadAllProjects(){
+  loadAllProjects(loginId){
     this.createAuthenticationHeaders();
-    return this.http.get(this.domain + 'projects/allProjects', this.options).map(res => res.json());
+    return this.http.get(this.domain + 'projects/allProjects/' + loginId, this.options).map(res => res.json());
 
   }
 

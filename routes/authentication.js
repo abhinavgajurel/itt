@@ -117,7 +117,7 @@ module.exports = (router) => {
                 const token = jwt.sign({ loginId: user._id }, config.secret, { expiresIn: '1hr' });
                 res.json({
                   success: true,
-                  message: 'Success!',
+                  message: 'Login success! Redirecting',
                   token: token,
                   user: {
                     loginId: user.loginId

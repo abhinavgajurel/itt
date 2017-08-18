@@ -12,11 +12,11 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a routerLink="/dashboard">Dashboard</a></li>
-        <li><a href="#">Profile</a></li>
-        <li><a routerLink = "/login">Login</a></li>
-        <li><a href="#" (click)="onLogoutClick()">Logout</a></li>
-        <li><a routerLink="/register">Register</a></li>
+        <li  *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" ><a routerLink="/dashboard" >Dashboard</a></li>
+        <li  *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" ><a href="#" >Profile</a></li>
+        <li  *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" ><a routerLink = "/login">Login</a></li>
+        <li  *ngIf="authService.loggedIn()"><a href="#" (click)="onLogoutClick()">Logout</a></li>
+        <li  *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" ><a routerLink="/register" >Register</a></li>
       </ul>
     </div>
   

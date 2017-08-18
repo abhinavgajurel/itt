@@ -19,6 +19,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TimelineComponent } from './components/dashboard/timeline/timeline.component';
 import { NewProjectComponent } from './components/new-project/new-project.component';
 import { ProjectHomeComponent } from './components/project-home/project-home.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 @NgModule({
@@ -41,7 +42,7 @@ import { ProjectHomeComponent } from './components/project-home/project-home.com
     HttpModule,
     FlashMessagesModule
   ],
-  providers: [AuthService,PostService,ProjectService],
+  providers: [AuthService, PostService, ProjectService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
