@@ -28,7 +28,7 @@ module.exports = (router) => {
           res.json({ success: false, message: 'Currently there are no projects' });
         } else {
           projects.forEach(project => {
-            if(project.members.includes(req.params.loginId)){
+            if (project.members.includes(req.params.loginId)) {
               projectR.push(project);
             }
           });
@@ -95,5 +95,51 @@ module.exports = (router) => {
       }
     }
   });
+
+  router.get('/getSingleProject/:projectId', (req, res) => {
+    if (!req.params.projectId) {
+      res.json({ success: false, message: 'Project id not provided!' });
+    } else {
+      Project.find({ _id: req.params.projectId }, (err, project) => {
+        if (err) {
+          res.json({ success: false, message: err });
+        } else {
+          if (!project) {
+            res.json({ success: false, message: 'Project does not exist' });
+          } else {
+            res.json({ success: true, project: project });
+          }
+        }
+      });
+    }
+  });
+
+  // not in use currently
+  router.post('/getProjectMembers', (req, res) => {
+    memberList = [];
+    if (!req.body) {
+      res.json({ success: false, message: 'Member not provided' });
+    }
+    else {
+      memberList = req.body;
+      projectMemberList = [];
+      console.log(memberList);
+      memberList.forEach(member => {
+        User.find({ loginId: member }, (err, user) => {
+          if(err){
+            res.json({ success: false, message: err });
+            }else{
+              if(!user){
+                res.json({ success: false, message: 'Member not found' });
+              }else{
+                projectMemberList.push(user);
+              }
+            }
+        });
+      });
+      res.json({ success: true, members: user });
+    };
+  });
+
   return router;
 }

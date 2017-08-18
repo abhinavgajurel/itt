@@ -14,7 +14,9 @@ export class DashboardComponent implements OnInit {
   username;
   loginId;
 
-  constructor(private projectService : ProjectService, private authService : AuthService) { }
+  constructor(private projectService : ProjectService, private authService : AuthService) {
+    this.projects = 0;
+   }
 
   loadAllProjects(){
     this.projectService.loadAllProjects(this.loginId).subscribe(project =>{

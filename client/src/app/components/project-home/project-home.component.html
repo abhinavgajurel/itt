@@ -1,3 +1,57 @@
-<p>
-  project-home works!
-</p>
+<div class=" col-xs-6">
+  <div class="well">
+    <div>
+      <strong> <h3>{{project.projectName}} </h3></strong>
+    </div>
+    <div>
+      <strong>Description </strong> : {{project.projectDescription}}
+    </div>
+  </div>
+
+  <h3> Issues </h3>
+  
+   <div class="panel panel-default">
+                <div class="panel-heading">
+                  <div class="row">
+                  <div class="col-xs-6">
+                    <h2 class="active panel-title">Total Task Count : <span class="badge">12</span></h2>
+                  </div>
+                      <div class="col-xs-6">
+                        <a href="#" id="new-project-button" class="btn btn-warning btn-sm">Create Task</a>
+                      </div>
+                </div>
+                    <br>
+                    <div class="row">
+                  <div class="col-xs-6">
+                    <h2 class="active panel-title">Total Bugs Count : <span class="badge">12</span></h2>
+                  </div>
+                      <div class="col-xs-6">
+                        <a href="#" id="new-project-button" class="btn btn-danger btn-sm">Report Bugs</a>
+                      </div>
+                </div>
+                </div>
+            </div>
+
+
+</div>
+<div class=" col-xs-6">
+    
+  <div class="panel">
+    <table class="table table-striped table-hover ">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Member Name</th>
+          <th>Member Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let member of members">
+          <td>1</td>
+          <td>{{member.name}}</td>
+          <td>{{member.email}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

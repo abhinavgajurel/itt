@@ -87,7 +87,7 @@ export class NewProjectComponent implements OnInit {
     this.projectService.createNewProject(project).subscribe(data => {
       if (!data.success) {
         this.messageClass = 'alert alert-danger'; 
-        this.message = data.message;
+        this.message = data.message.message;
       } else {
         this.messageClass = 'alert alert-success'; 
         this.message = data.message; 

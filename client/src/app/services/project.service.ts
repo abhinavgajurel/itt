@@ -44,4 +44,17 @@ export class ProjectService {
 
   }
 
+  getSingleProject(projectId){
+    this.createAuthenticationHeaders();
+    return this.http.get(this.domain + 'projects/getSingleProject/' + projectId, this.options).map(res => res.json());
+
+  }
+
+  //not in use
+  getProjectMembers(members){
+    this.createAuthenticationHeaders();
+    return this.http.post(this.domain + 'projects/getProjectMembers/' , members, this.options).map(res => res.json());
+
+  }
+
 }

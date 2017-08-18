@@ -36,7 +36,8 @@ const appRoutes: Routes = [
     path: 'projectHome/:id',
     component: ProjectHomeComponent,
     canActivate: [AuthGuard]
-  }
+  },
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({
