@@ -27,6 +27,7 @@ import { NewTaskComponent } from './components/task/new-task/new-task.component'
 import { TaskHomeComponent } from './components/task/task-home/task-home.component';
 import { NewBugComponent } from './components/bug/new-bug/new-bug.component';
 import { BugHomeComponent } from './components/bug/bug-home/bug-home.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { BugHomeComponent } from './components/bug/bug-home/bug-home.component';
     NewTaskComponent,
     TaskHomeComponent,
     NewBugComponent,
-    BugHomeComponent
+    BugHomeComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

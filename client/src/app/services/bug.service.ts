@@ -23,6 +23,12 @@ export class BugService {
     return this.http.get(this.domain + 'bugs/getSingleBug/' + bugId, this.options).map(res => res.json());
   }
 
+  loadAllBugs(loginId){
+    this.createAuthenticationHeaders();
+    return this.http.get(this.domain + 'tasks/allBugs/' + loginId, this.options).map(res => res.json());
+
+  }
+
   loadToken() {
     this.authToken = localStorage.getItem('token');
   }

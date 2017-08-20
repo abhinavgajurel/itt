@@ -100,5 +100,28 @@ module.exports = (router) => {
             });
         }
     });
+
+    router.get('/allBugs/:loginId', (req, res) => {
+    bugR = [];
+    Bug.find({}, (err, bug) => {
+      if (err) {
+        res.json({ success: false, message: err });
+      } else {
+        if (![bug]) {
+          res.json({ success: false, message: 'Currently there are no bug' });
+        } else {
+            // need to change
+        //   bug.forEach(bug => {
+        //     if (bug.members.includes(req.params.loginId)) {
+        //       bugR.push(bug);
+        //     }
+        //   });
+          res.json({ success: true, bug: bug });
+        }
+      }
+    }).sort({ '_id': -1 });
+  });
+
+
     return router;
 }

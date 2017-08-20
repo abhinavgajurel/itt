@@ -2,26 +2,27 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="active panel-title">My Task  <span class="badge">3</span></h3>
+      <h3 class="active panel-title">Tasks  <span class="badge">{{tasks.length}}</span></h3>
       
     </div>
-    <ul>
-      <li>Print Function for report</li>
-      <li>List the group members</li>
-      <li>Comment Function</li>
+    <ul *ngFor="let task of tasks" class="list-group">
+      
+      <a [routerLink]="['/taskHome/', task._id]" class="list-group-item">{{task.name}}</a>
+      
     </ul>
   </div>
 
 
   <div class="panel panel-danger">
     <div class="panel-heading">
-      <h3 class="active panel-title">Bugs  <span class="badge">2</span></h3>
+      <h3 class="active panel-title">Bugs  <span class="badge">{{bugs.length}}</span></h3>
       
     </div>
-      <ul>
-        <li>Load buttons not working</li>
-        <li>Incorrect Report Generation</li>
-      </ul>
+     <ul *ngFor="let bug of bugs" class="list-group">
+      
+      <a [routerLink]="['/bugHome/', bug._id]" class="list-group-item">{{bug.name}}</a>
+      
+    </ul>
   </div>
 
 </div>

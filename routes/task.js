@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const Project = require('../models/project');
+const task = require('../models/task');
 const Task = require('../models/task');
 const config = require('../config/database');
 
@@ -100,5 +100,27 @@ module.exports = (router) => {
             });
         }
     });
+
+    router.get('/allTasks/:loginId', (req, res) => {
+    taskR = [];
+    Task.find({}, (err, task) => {
+      if (err) {
+        res.json({ success: false, message: err });
+      } else {
+        if (![task]) {
+          res.json({ success: false, message: 'Currently there are no task' });
+        } else {
+            // need to change
+        //   task.forEach(task => {
+        //     if (task.members.includes(req.params.loginId)) {
+        //       taskR.push(task);
+        //     }
+        //   });
+          res.json({ success: true, task: task });
+        }
+      }
+    }).sort({ '_id': -1 });
+  });
+
     return router;
 }

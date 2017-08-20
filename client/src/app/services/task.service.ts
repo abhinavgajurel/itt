@@ -23,6 +23,12 @@ export class TaskService {
     return this.http.get(this.domain + 'tasks/getSingleTask/' + taskId, this.options).map(res => res.json());
   }
 
+  loadAllTasks(loginId){
+    this.createAuthenticationHeaders();
+    return this.http.get(this.domain + 'tasks/allTasks/' + loginId, this.options).map(res => res.json());
+
+  }
+
   loadToken() {
     this.authToken = localStorage.getItem('token');
   }

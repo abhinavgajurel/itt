@@ -43,6 +43,7 @@ export class ProjectService {
     return this.http.get(this.domain + 'projects/allProjects/' + loginId, this.options).map(res => res.json());
 
   }
+  
 
   getSingleProject(projectId){
     this.createAuthenticationHeaders();

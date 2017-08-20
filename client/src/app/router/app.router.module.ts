@@ -11,6 +11,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import { NewTaskComponent} from '../components/task/new-task/new-task.component';
 import { NewBugComponent} from '../components/bug/new-bug/new-bug.component';
 import { BugHomeComponent} from '../components/bug/bug-home/bug-home.component';
+import { ProfileComponent } from '../components/profile/profile.component';
 
 
 
@@ -61,6 +62,11 @@ const appRoutes: Routes = [
   {
     path: 'bugHome/:id',
     component: BugHomeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
     canActivate: [AuthGuard]
   },
   { path: '**', component: HomeComponent }
