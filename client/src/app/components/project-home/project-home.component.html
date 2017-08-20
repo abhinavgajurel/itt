@@ -17,7 +17,7 @@
                     <h2 class="active panel-title">Total Task Count : <span class="badge">12</span></h2>
                   </div>
                       <div class="col-xs-6">
-                        <a href="#" id="new-project-button" class="btn btn-warning btn-sm">Create Task</a>
+                        <a routerLink="/newTask" id="new-project-button" class="btn btn-warning btn-sm">Create Task</a>
                       </div>
                 </div>
                     <br>
@@ -46,8 +46,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let member of members">
-          <td>1</td>
+        <tr *ngFor="let member of members let i=index" >
+          <td>{{i+1}}</td>
           <td>{{member.name}}</td>
           <td>{{member.email}}</td>
         </tr>

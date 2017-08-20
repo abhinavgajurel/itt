@@ -6,7 +6,7 @@ let postLengthChecker = (post) => {
   if (!post) {
     return false;
   } else {
-    if (post.length > 100) {
+    if (post.length > 500) {
       return false;
     } else {
       return true;
@@ -25,7 +25,7 @@ let answerLengthChecker = (answer) => {
   if (!answer[0]) {
     return false;
   } else {
-    if (answer[0].length < 1 || answer[0].length > 100) {
+    if (answer[0].length < 1 || answer[0].length > 500) {
       return false;
     } else {
       return true;

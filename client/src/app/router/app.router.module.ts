@@ -7,6 +7,9 @@ import { DashboardComponent} from '../components/dashboard/dashboard.component';
 import { NewProjectComponent} from '../components/new-project/new-project.component';
 import { ProjectHomeComponent} from '../components/project-home/project-home.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { NewTaskComponent} from '../components/task/new-task/new-task.component';
+
+
 
 
 const appRoutes: Routes = [
@@ -35,6 +38,11 @@ const appRoutes: Routes = [
   {
     path: 'projectHome/:id',
     component: ProjectHomeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'newTask',
+    component: NewTaskComponent,
     canActivate: [AuthGuard]
   },
   { path: '**', component: HomeComponent }

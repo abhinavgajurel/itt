@@ -27,12 +27,13 @@ module.exports = (router) => {
         if (![projects]) {
           res.json({ success: false, message: 'Currently there are no projects' });
         } else {
-          projects.forEach(project => {
-            if (project.members.includes(req.params.loginId)) {
-              projectR.push(project);
-            }
-          });
-          res.json({ success: true, projects: projectR });
+          // need to update
+          // projects.forEach(project => {
+          //   if (project.members.includes(req.params.loginId)) {
+          //     projectR.push(project);
+          //   }
+          // });
+          res.json({ success: true, projects: projects });
         }
       }
     }).sort({ '_id': -1 });
@@ -62,9 +63,6 @@ module.exports = (router) => {
 
             project.save((err, data) => {
               if (err) {
-                if (err.code === 11000) {
-                  res.json({ success: false, message: 'Login ID or e-mail already exists' });
-                } else {
                   if (err.errors) {
                     if (err.errors.email) {
                       res.json({ success: false, message: err.errors.email.message });
@@ -85,7 +83,6 @@ module.exports = (router) => {
                   } else {
                     res.json({ success: false, message: 'Could not save user. Error: ', err });
                   }
-                }
               } else {
                 res.json({ success: true, data: data, message: 'New Project has been created! Redirecting to project home' });
               }

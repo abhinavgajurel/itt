@@ -14,12 +14,15 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthService } from './services/auth.service';
 import { PostService } from './services/post.service';
 import { ProjectService } from './services/project.service';
+import { TaskService } from './services/task.service';
+
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TimelineComponent } from './components/dashboard/timeline/timeline.component';
 import { NewProjectComponent } from './components/new-project/new-project.component';
 import { ProjectHomeComponent } from './components/project-home/project-home.component';
 import { AuthGuard } from './guards/auth.guard';
+import { NewTaskComponent } from './components/task/new-task/new-task.component';
 
 
 @NgModule({
@@ -33,6 +36,7 @@ import { AuthGuard } from './guards/auth.guard';
     TimelineComponent,
     NewProjectComponent,
     ProjectHomeComponent,
+    NewTaskComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,7 @@ import { AuthGuard } from './guards/auth.guard';
     HttpModule,
     FlashMessagesModule
   ],
-  providers: [AuthService, PostService, ProjectService, AuthGuard],
+  providers: [AuthService, PostService, ProjectService, AuthGuard, TaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

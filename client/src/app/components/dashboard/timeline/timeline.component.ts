@@ -34,14 +34,14 @@ export class TimelineComponent implements OnInit {
     this.form = this.formBuilder.group({
       content: ['', Validators.compose([
         Validators.required,
-        Validators.maxLength(100),
+        Validators.maxLength(500),
       ])]
     });
 
     this.editForm = this.formBuilder.group({
       editContent: ['', Validators.compose([
         Validators.required,
-        Validators.maxLength(100),
+        Validators.maxLength(500),
       ])]
     });
 
@@ -49,7 +49,7 @@ export class TimelineComponent implements OnInit {
       answer: ['', Validators.compose([
         Validators.required,
         Validators.minLength(1),
-        Validators.maxLength(100)
+        Validators.maxLength(500)
       ])]
     })
 

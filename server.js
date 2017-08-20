@@ -9,6 +9,7 @@ const cors = require('cors');
 const authentication = require('./routes/authentication')(router);
 const dashboard = require('./routes/dashboard')(router);
 const project = require('./routes/project')(router);
+const task = require('./routes/task')(router);
 
 // Database Connection
 mongoose.Promise = global.Promise;
@@ -28,6 +29,7 @@ app.use(bodyParser.json());
 app.use('/authentication', authentication);
 app.use('/posts', dashboard);
 app.use('/projects', project);
+app.use('/tasks', task);
 
 app.listen(8080, function(err) {
   if (err){
