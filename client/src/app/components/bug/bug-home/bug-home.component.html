@@ -1,0 +1,50 @@
+<div class="container">
+  <h3> Bug </h3>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="container">
+        <h5> {{bug.name}}</h5>
+        </div>
+        <div class=" col-xs-6">
+          <h3 class="panel-title">
+            Created By:
+            <strong>{{bug.createdBy}}</strong></h3>
+        </div>
+        <div class=" col-xs-6" align="right">
+          Date: <strong> {{bug.createdAt | date:'MMM dd, yyyy'}} </strong>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class=" col-xs-3">
+        <h5><strong>Status:</strong></h5>
+        <h5><strong>Priority:</strong></h5>
+        <h5><strong>Assignee:</strong></h5>
+        <h5><strong>Estimated Time:</strong></h5>
+      </div>
+
+      <div class=" col-xs-3">
+        <h5>{{bug.status}}</h5>
+        <h5>{{bug.priority}}</h5>
+        <h5>{{bug.assignee}}</h5>
+        <h5>{{bug.estimatedTime}}</h5>
+      </div>
+
+      <div class=" col-xs-3">
+        <h5><strong>Start Date:</strong></h5>
+        <h5><strong>Due Date:</strong></h5>
+        <h5><strong>Percentage Done:</strong></h5>
+      </div>
+      <div class=" col-xs-3">
+        <h5>{{bug.startDate | date:'dd MMM yyyy'}}</h5>
+        <h5>{{bug.dueDate | date:'dd MMM yyyy'}}</h5>
+        <h5>{{bug.percentDone}}</h5>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-body">
+    <h5> <strong>Description </strong></h5>
+    {{bug.description}}
+  </div>
+</div>

@@ -10,6 +10,7 @@ const authentication = require('./routes/authentication')(router);
 const dashboard = require('./routes/dashboard')(router);
 const project = require('./routes/project')(router);
 const task = require('./routes/task')(router);
+const bug = require('./routes/bug')(router);
 
 // Database Connection
 mongoose.Promise = global.Promise;
@@ -30,6 +31,7 @@ app.use('/authentication', authentication);
 app.use('/posts', dashboard);
 app.use('/projects', project);
 app.use('/tasks', task);
+app.use('/bugs', bug);
 
 app.listen(8080, function(err) {
   if (err){

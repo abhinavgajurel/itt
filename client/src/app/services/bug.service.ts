@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { Http, Headers, RequestOptions } from '@angular/http';
 
 @Injectable()
-export class TaskService {
+export class BugService {
 
   options;
   authToken;
@@ -11,16 +11,16 @@ export class TaskService {
 
   constructor(private authService: AuthService, private http: Http) { }
 
-  createNewTask(task){
+  createNewbug(bug){
 
     this.createAuthenticationHeaders();
-    return this.http.post(this.domain + 'tasks/createTask', task, this.options).map(res => res.json());
+    return this.http.post(this.domain + 'bugs/createBug', bug, this.options).map(res => res.json());
   }
 
 
-  getSingleTask(taskId){
+  getSingleBug(bugId){
     this.createAuthenticationHeaders();
-    return this.http.get(this.domain + 'tasks/getSingleTask/' + taskId, this.options).map(res => res.json());
+    return this.http.get(this.domain + 'bugs/getSingleBug/' + bugId, this.options).map(res => res.json());
   }
 
   loadToken() {

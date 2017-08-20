@@ -15,6 +15,7 @@ import { AuthService } from './services/auth.service';
 import { PostService } from './services/post.service';
 import { ProjectService } from './services/project.service';
 import { TaskService } from './services/task.service';
+import { BugService } from './services/bug.service';
 
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -23,6 +24,9 @@ import { NewProjectComponent } from './components/new-project/new-project.compon
 import { ProjectHomeComponent } from './components/project-home/project-home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NewTaskComponent } from './components/task/new-task/new-task.component';
+import { TaskHomeComponent } from './components/task/task-home/task-home.component';
+import { NewBugComponent } from './components/bug/new-bug/new-bug.component';
+import { BugHomeComponent } from './components/bug/bug-home/bug-home.component';
 
 
 @NgModule({
@@ -37,6 +41,9 @@ import { NewTaskComponent } from './components/task/new-task/new-task.component'
     NewProjectComponent,
     ProjectHomeComponent,
     NewTaskComponent,
+    TaskHomeComponent,
+    NewBugComponent,
+    BugHomeComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +53,7 @@ import { NewTaskComponent } from './components/task/new-task/new-task.component'
     HttpModule,
     FlashMessagesModule
   ],
-  providers: [AuthService, PostService, ProjectService, AuthGuard, TaskService],
+  providers: [AuthService, PostService, ProjectService, AuthGuard, TaskService,BugService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
