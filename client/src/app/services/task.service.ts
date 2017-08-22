@@ -43,4 +43,10 @@ export class TaskService {
     });
   }
 
+  updateTask(task){
+     this.createAuthenticationHeaders();
+    return this.http.put(this.domain + 'tasks/updateTask/', task, this.options).map(res => res.json());
+
+  }
+
 }

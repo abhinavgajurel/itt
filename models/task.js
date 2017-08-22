@@ -31,8 +31,8 @@ const taskSchema = new Schema({
   status: { type: String, required: true },
   priority: { type: String, default: 'low' },
   assignee: { type: String, required: true },
-  startDate: { type: Date, required: true },
-  dueDate: { type: Date, required: true },
+  startDate: { type: Date },
+  dueDate: { type: Date },
   estimatedTime: { type: Number, required: true},
   percentDone: { type: Number, required: true, default: 0 }
 });

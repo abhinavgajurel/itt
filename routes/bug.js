@@ -122,6 +122,58 @@ module.exports = (router) => {
     }).sort({ '_id': -1 });
   });
 
+   router.put('/updateBug', (req, res) => {
+        if (!req.body._id.id) {
+            res.json({ success: false, message: 'No bug id provided' });
+        } else {
+            Bug.findOne({ _id: req.body._id.id }, (err, bug) => {
+                if (err) {
+                    res.json({ success: false, message: 'Not a valid bug id' });
+                } else {
+                    if (!bug) {
+                        res.json({ success: false, message: 'bug id was not found.' });
+                    } else {
+                        User.findOne({ _id: req.decoded.loginId }, (err, user) => {
+                            if (err) {
+                                res.json({ success: false, message: err });
+                            } else {
+                                if (!user) {
+                                    res.json({ success: false, message: 'Unable to authenticate user.' });
+                                } else {
+                                    if (user.loginId !== bug.createdLoginId) {
+                                        res.json({ success: false, message: 'You are not authorized to edit this bug.' });
+                                    } else {
+                                        bug.name = req.body.name,
+                                            bug.description = req.body.description,
+                                            bug.status = req.body.status,
+                                            bug.priority = req.body.priority,
+                                            bug.assignee = req.body.assignee,
+                                            bug.startDate = req.body.startDate,
+                                            bug.dueDate = req.body.dueDate,
+                                            bug.estimatedTime = req.body.estimatedTime,
+                                            bug.percentDone = req.body.perDone,
+                                            bug.save((err) => {
+                                                if (err) {
+                                                    if (err.errors) {
+                                                        res.json({ success: false, message: 'Please ensure form is filled out properly' });
+                                                    } else {
+                                                        res.json({ success: false, message: err });
+                                                    }
+                                                } else {
+                                                    res.json({ success: true, message: 'Your bug has been updated!' });
+                                                }
+                                            });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+
 
     return router;
 }

@@ -1,3 +1,16 @@
 textarea {
     resize: none;
 }
+#project-heading{
+
+    background-color: lightgrey;
+}
+
+#task-heading{
+    background-color: lightblue;
+}
+
+#bug-heading{
+    background-color: lightseagreen;
+}
+    

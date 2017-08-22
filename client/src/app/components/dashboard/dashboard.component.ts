@@ -21,6 +21,8 @@ export class DashboardComponent implements OnInit {
   constructor(private projectService : ProjectService, private authService : AuthService,
   private bugService : BugService , private taskService : TaskService  ) {
     this.projects = 0;
+    this.tasks = 0;
+    this.bugs = 0;
    }
 
   loadAllProjects(){

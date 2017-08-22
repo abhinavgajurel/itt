@@ -1,11 +1,23 @@
 <div class="container">
-  <h3> Bug </h3>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <div class="row">
-        <div class="container">
-        <h5> {{bug.name}}</h5>
-        </div>
+<div class="row show-hide-message">
+    <div [ngClass]="messageClass">
+      {{ message }}
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+   <h3> Bug </h3> 
+  <div class="panel panel-default" >
+    <div class="panel-heading" id="bug-heading">
+       <div class="row">
+          <div class=" col-xs-6">
+            <h5 class="panel-title"> <strong>{{bug.name}} </strong></h5>
+          </div>
+          <div class=" col-xs-6" align="right">
+            <button type="button" name="editButton" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal" (click)="loadEditBug()"><span class="glyphicon glyphicon-edit"></span></button>
+          </div>
         <div class=" col-xs-6">
           <h3 class="panel-title">
             Created By:
@@ -46,5 +58,109 @@
   <div class="panel panel-body">
     <h5> <strong>Description </strong></h5>
     {{bug.description}}
+  </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit</h4>
+      </div>
+      <div class="modal-body">
+
+       <form [formGroup]="editBugForm" (submit)="editBug()">
+
+    <div class="form-group">
+      <label for="editBugName">Bug Name</label>
+      <div>
+        <input type="text" name="editBugName" [(ngModel)]="editBug.name" class="form-control" autocomplete="off" placeholder="*Bug Name" formControlName="editBugName"
+        />
+      </div>
+    </div>
+
+     <div class="form-group">
+      <label for="BugDescription">Description</label>
+      <div>
+        <textarea name="BugDescription" class="form-control" [(ngModel)]="editBug.description" autocomplete="off" placeholder="*About Bug" formControlName="editBugDescription"></textarea>
+      </div>
+    </div>
+
+    <div class="col-xs-6">
+    <div class="form-group">
+
+      <label for="BugName">Priority</label>
+    <select class="form-control" id="priority-select" [(ngModel)]="editBug.priority" formControlName="editPriority">
+    <option >Low</option>
+    <option >Medium</option>
+    <option >High</option>
+    <option >Urgent</option>
+  </select>
+    </div>
+
+    <div class="form-group">
+      <label for="BugName">Status</label>
+    <select class="form-control" id="status-select" [(ngModel)]="editBug.status" formControlName="editStatus">
+    <option >New</option>
+    <option >In Progress</option>
+    <option >Closed</option>
+  </select>
+    </div>
+
+   <div class="form-group">
+      <label for="BugName">Assignee</label>
+    <select class="form-control" id="assignee-select" [(ngModel)]="editBug.assignee"  formControlName="editAssignee">
+    <option  *ngFor="let member of members">{{member.name}}</option>
+  </select>
+    </div>
+    </div>
+
+    <div class="col-xs-6">
+    <div class="form-group">
+      <label for="startDate">Start Date</label>
+      <div>
+        <input type="date" name="startDate" class="form-control" [ngModel]="editBug.startDate | date:'yyyy-MM-dd'" (ngModelChange)="startDate = $event" autocomplete="off" formControlName="editStartDate"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dueDate">Due Date</label>
+      <div>
+        <input type="date" name="dueDate" class="form-control" [ngModel]="editBug.dueDate | date:'yyyy-MM-dd'" (ngModelChange)="dueDate = $event" autocomplete="off" formControlName="editDueDate"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="estimatedTime">Estimated Time (in hours)</label>
+      <div>
+        <input type="number" name="estimatedTime" class="form-control" [(ngModel)]="editBug.estimatedTime" autocomplete="off" placeholder="*In hours" formControlName="editEstimatedTime"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="perDone">Percentage Done</label>
+      <div>
+        <input type="number" name="perDone" class="form-control" autocomplete="off" [(ngModel)]="editBug.percentDone" placeholder="*% Done" formControlName="editPerDone"
+        />
+      </div>
+    </div>
+    </div>
+
+    <br>
+    <br> 
+
+  </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="updateBug()" data-dismiss="modal">Edit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
   </div>
 </div>

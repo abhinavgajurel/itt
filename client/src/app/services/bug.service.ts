@@ -43,4 +43,10 @@ export class BugService {
     });
   }
 
+  updateBug(bug){
+     this.createAuthenticationHeaders();
+    return this.http.put(this.domain + 'tasks/updateBug/', bug, this.options).map(res => res.json());
+
+  }
+
 }
